@@ -1,0 +1,208 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Simple REST API to Authenticate user 
+  description: A proposed openAPI explorer for Rest Api Starter Template
+schemes:
+  - http
+servers:
+  - url: http://localhost:3000/api
+    description: Development server
+tags:
+  - name: Auth
+    description: Authentication  operations
+  - name: Dept
+    description: Routes related to End User
+paths:
+  /fetchData:
+    get:
+      tags:
+        - Dept
+      summary: Get a list of all the users
+      description: Get a list of all the users registered in this app. 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User fetched successfully.
+        '403':
+          description: Failed, Forbidden to fetch admins..
+      security:
+        - bearerAuth: []      
+  /addData:
+    post:
+      tags:
+        - Dept
+      summary: Creates a new User
+      description: Creates a new user
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  required: true
+                dept:
+                  type: string
+                emp_id:
+                  required: true
+                  type: integer
+      responses:
+        '200':
+          description: User Created successfully.
+        '400':
+          description: Unable to create user.
+      security:
+        - bearerAuth: []      
+  /updateData:
+    put:
+      tags:
+        - Dept
+      summary: Update Data
+      description: Update data present in database.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  required: true
+      responses:
+        '200':
+          description: Updated Successfully.
+        '400':
+          description: Unable to update.
+      security:
+        - bearerAuth: []  
+  /deleteData:
+    delete:
+      tags:
+        - Dept
+      summary: Delete a user permanently
+      description: Delete a user permanently from databse.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Deleted Successfully.
+        '400':
+          description: Bad Request.
+      security:
+        - bearerAuth: []  
+  
+  /register:
+    post:
+      tags:
+        - Auth
+      summary: Creates a new User
+      description: Creates a new user
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  required: true
+                  example: user@email.com
+                password:
+                  type: string
+                  example: Password@123
+                name:
+                  type: string
+                  required: true
+      responses:
+        '200':
+          description: User Created successfully.
+  /login:
+    post:
+      tags:
+        - Auth
+      summary: Login a user
+      description: Login a user using email and password.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  required: true
+                  example: user@email.com
+                password:
+                  type: string
+                  example: Password@123
+      responses:
+        '200':
+          description: Logged In Successfully.
+        '403':
+          description: password Incorrect.
+        '403':
+            description : Username or Password Incorrect
+        '400':
+          description: Authentication failed! Please check the request   
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT   
+  schemas:
+    Dept:
+      type: object
+      properties:
+        id:
+          type:integer
+        dept:
+          type:string
+        emp_id:
+          type:integer
+    required:
+      - id
+      - dept
+      - emp_id
+    Auth:
+      type: object
+      properties:
+        username:
+          type:string
+        password:
+          type:string
+        name:
+          type:string
+    required:
+      - username
+      - password
+      - name     
+        
+  
