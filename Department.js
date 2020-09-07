@@ -3,6 +3,10 @@ const db = require('./queries').pool
 const jwt = require('jsonwebtoken')
 router.get('/fetchData', (request, response) => {
     let token = request.headers['x-access-token'] || request.headers['authorization'];
+    if (token.startsWith('Bearer ')) {
+      // Remove Bearer from string
+      token = token.slice(7, token.length);
+    }
     if (token) {
       jwt.verify(token, process.env.SECRET, (err, decoded) => {
         if (err) {
@@ -29,6 +33,10 @@ router.post('/addData',(request,response) =>{
     //    console.log(request.body);
     //    response.send(JSON.stringify({"status":200,}))
     let token = request.headers['x-access-token'] || request.headers['authorization'];
+    if (token.startsWith('Bearer ')) {
+      // Remove Bearer from string
+      token = token.slice(7, token.length);
+    }
     //console.log(token)
     // Express headers are auto converted to lowercase
       // if (token.startsWith('Bearer ')) {
@@ -67,6 +75,10 @@ router.post('/addData',(request,response) =>{
     })
     router.put('/updateData',(request,response) =>{
         let token = request.headers['x-access-token'] || request.headers['authorization'];
+        if (token.startsWith('Bearer ')) {
+          // Remove Bearer from string
+          token = token.slice(7, token.length);
+        }
         if (token) {
           jwt.verify(token, process.env.SECRET, (err, decoded) => {
             if (err) {
@@ -92,6 +104,10 @@ router.post('/addData',(request,response) =>{
       })
       router.delete('/deleteData',(request,response) =>{
         let token = request.headers['x-access-token'] || request.headers['authorization'];
+        if (token.startsWith('Bearer ')) {
+          // Remove Bearer from string
+          token = token.slice(7, token.length);
+        }
         if (token) {
           jwt.verify(token, process.env.SECRET, (err, decoded) => {
             if (err) {

@@ -187,10 +187,10 @@ components:
           type:string
         emp_id:
           type:integer
-    required:
-      - id
-      - dept
-      - emp_id
+      required:
+        - id
+        - dept
+        - emp_id
     Auth:
       type: object
       properties:
@@ -200,9 +200,9 @@ components:
           type:string
         name:
           type:string
-    required:
-      - username
-      - password
-      - name     
+      required:
+        - username
+        - password
+        - name     
         
   
